@@ -1,0 +1,130 @@
+Great name! Here's the updated `README.md` incorporating the full project name **W\.A.S.T.E.** (Waste Assessment and Sorting Technology Engine):
+
+---
+
+# ♻️ W\.A.S.T.E.
+
+**Waste Assessment and Sorting Technology Engine**
+
+W\.A.S.T.E. is an intelligent, camera-powered trash can that identifies and sorts waste materials using real-time image classification and servo-controlled bins. Built with a Raspberry Pi 5 and a fine-tuned YOLO model, this system brings smart automation to everyday recycling.
+
+---
+
+## 🚀 Features
+
+* 📸 **AI Classification** using a fine-tuned YOLOv8 model (ONNX)
+* 🤖 **Automatic sorting** via two servo-controlled lids
+* 👋 **Hands-free activation** with ultrasonic proximity detection
+* 💡 **LED indicators** for status and feedback
+* 🧠 **Majority-vote logic** for increased classification confidence
+
+---
+
+## 🧰 Hardware Components
+
+| Component          | Description                        |
+| ------------------ | ---------------------------------- |
+| Raspberry Pi 5     | Central controller                 |
+| Ultrasonic Sensor  | Detects nearby objects             |
+| Camera Module      | Captures images for classification |
+| Servo x2           | Controls left and right bin lids   |
+| LED x2             | Yellow (status), Red (error)       |
+| Breadboard + Wires | Electrical connections             |
+
+---
+
+## 🖼️ Waste Categories
+
+| Category             | Sorted To          |
+| -------------------- | ------------------ |
+| Paper                | Left               |
+| Cardboard            | Left               |
+| Plastic              | Right              |
+| Metal                | Right              |
+| Background / Unknown | Rejected (red LED) |
+
+---
+
+## 🛠️ Setup
+
+### 🧾 Prerequisites
+
+Install the necessary Python packages:
+
+```bash
+pip install ultralytics numpy pillow gpiozero picamera2
+```
+
+Ensure:
+
+* `model.onnx` is in the same directory.
+* Camera is enabled via `libcamera`.
+
+### 🧬 GPIO Pin Assignments
+
+| Component            | GPIO Pin |
+| -------------------- | -------- |
+| Trigger (Ultrasonic) | 4        |
+| Echo (Ultrasonic)    | 17       |
+| Left Servo           | 12       |
+| Right Servo          | 18       |
+| Yellow LED           | 15       |
+| Red LED              | 26       |
+
+---
+
+## 🧠 How It Works
+
+1. **Detect proximity** with the ultrasonic sensor.
+2. **Capture 50 frames** via camera.
+3. **Classify each frame** with the YOLO model.
+4. **Determine most frequent confident label**.
+5. **Activate appropriate servo** (left or right).
+6. **Blink red LED** if classification is inconclusive.
+
+---
+
+## 🧪 Example Run
+
+```text
+🔍 Object detected near the sensor
+📷 Capturing frames...
+✅ Detected: plastic (confidence: 0.92)
+🛞 Activating Right Servo
+🔄 Waiting for next object...
+```
+
+If the model cannot confidently identify the object, the red LED blinks and no sorting occurs.
+
+---
+
+## 🧠 Logic Highlights
+
+* **Confidence threshold:** 0.6
+* **Background class** is ignored
+* **Majority voting** (min 4 positive detections) used for robustness
+* **Parallel LED blinking** using `multiprocessing`
+
+---
+
+## 📸 Demo & Images
+
+*Coming soon — feel free to contribute with setup pictures or video demos!*
+
+---
+
+## 📜 License
+
+Open-source for educational and non-commercial use.
+
+---
+
+## 🙌 Credits
+
+* [Ultralytics YOLOv8](https://github.com/ultralytics/ultralytics)
+* Raspberry Pi Foundation
+* Project by: **\[Your Name]**
+
+---
+
+Let me know if you’d like to add wiring diagrams, schematics, or a video tutorial section.
